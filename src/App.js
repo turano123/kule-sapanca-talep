@@ -65,10 +65,10 @@ Talep No: ${talepNo}
         Kule Sapanca WhatsApp Rezervasyon Talep Formu
       </h2>
 
-      <label>Giriş Tarihi</label>
+      <label>Giriş Tarihi <span style={required}>*</span></label>
       <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} style={input} />
 
-      <label>Çıkış Tarihi</label>
+      <label>Çıkış Tarihi <span style={required}>*</span></label>
       <input
         type="date"
         value={checkOut}
@@ -77,7 +77,7 @@ Talep No: ${talepNo}
         style={input}
       />
 
-      <label>Yetişkin Sayısı</label>
+      <label>Yetişkin Sayısı <span style={required}>*</span></label>
       <input type="number" min="0" value={adults} onChange={(e) => setAdults(e.target.value)} style={input} />
 
       <label>Çocuk Sayısı <span style={{ color: '#999' }}>(0-12 yaş)</span></label>
@@ -153,6 +153,11 @@ const button = {
   border: 'none',
   borderRadius: 6,
   cursor: 'pointer',
+};
+
+const required = {
+  color: 'red',
+  fontWeight: 'bold',
 };
 
 export default App;
