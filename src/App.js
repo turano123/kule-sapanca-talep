@@ -18,8 +18,8 @@ function App() {
 
   const handleChildCountChange = (e) => {
     const count = parseInt(e.target.value, 10);
-    setChildren(count);
-    setChildAges(Array(count).fill(''));
+    setChildren(e.target.value);
+    setChildAges(isNaN(count) ? [] : Array(count).fill(''));
   };
 
   const handleChildAgeChange = (index, value) => {
@@ -66,19 +66,30 @@ Talep No: ${talepNo}
       </h2>
 
       <label>Giriş Tarihi <span style={required}>*</span></label>
-      <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} style={input} />
+      <input
+        type="date"
+        value={checkIn}
+        onChange={(e) => setCheckIn(e.target.value)}
+        style={input}
+      />
 
       <label>Çıkış Tarihi <span style={required}>*</span></label>
       <input
         type="date"
         value={checkOut}
         onChange={(e) => setCheckOut(e.target.value)}
-        min={checkIn}
+        min={checkIn || undefined}
         style={input}
       />
 
       <label>Yetişkin Sayısı <span style={required}>*</span></label>
-      <input type="number" min="0" value={adults} onChange={(e) => setAdults(e.target.value)} style={input} />
+      <input
+        type="number"
+        min="0"
+        value={adults}
+        onChange={(e) => setAdults(e.target.value)}
+        style={input}
+      />
 
       <label>Çocuk Sayısı <span style={{ color: '#999' }}>(0-12 yaş)</span></label>
       <input
@@ -125,7 +136,8 @@ Talep No: ${talepNo}
 
 const container = {
   maxWidth: '100%',
-  width: 480,
+  width: '100%',
+  maxWidth: 480,
   margin: '30px auto',
   padding: 20,
   background: '#fff',
