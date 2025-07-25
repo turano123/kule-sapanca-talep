@@ -5,7 +5,8 @@ function App() {
   const [checkOut, setCheckOut] = useState('');
   const [adults, setAdults] = useState('');
   const [children, setChildren] = useState('');
-  const [pet, setPet] = useState('Yok');
+  const [childAges, setChildAges] = useState([]);
+  const [breakfast, setBreakfast] = useState('Evet');
   const [note, setNote] = useState('');
 
   const generateRequestId = () => Math.floor(100000 + Math.random() * 900000);
@@ -15,20 +16,38 @@ function App() {
     return `${day}.${month}.${year}`;
   };
 
+  const handleChildCountChange = (e) => {
+    const count = parseInt(e.target.value, 10);
+    setChildren(count);
+    setChildAges(Array(count).fill(''));
+  };
+
+  const handleChildAgeChange = (index, value) => {
+    const updatedAges = [...childAges];
+    updatedAges[index] = value;
+    setChildAges(updatedAges);
+  };
+
   const handleSubmit = () => {
-    if (!checkIn || !checkOut || !adults || !children) {
+    if (!checkIn || !checkOut || !adults || children === '') {
       alert("Lütfen tüm alanları doldurunuz.");
       return;
     }
 
     const talepNo = generateRequestId();
 
+    const childAgesText =
+      childAges.length > 0
+        ? childAges.map((age, i) => `Çocuk ${i + 1} yaşı: ${age || '-'}`).join('\n')
+        : 'Çocuk yaşı: -';
+
     const message = `
 ${formatDate(checkIn)}
 ${formatDate(checkOut)}
 ${adults} yetişkin
 ${children} çocuk
-evcil hayvan ${pet.toLowerCase()}
+kahvaltı: ${breakfast.toLowerCase()}
+${childAgesText}
 not: ${note || 'Yok'}
 
 Talep No: ${talepNo}
@@ -56,12 +75,32 @@ Talep No: ${talepNo}
       <input type="number" min="0" value={adults} onChange={(e) => setAdults(e.target.value)} style={input} />
 
       <label>Çocuk Sayısı</label>
-      <input type="number" min="0" value={children} onChange={(e) => setChildren(e.target.value)} style={input} />
+      <input
+        type="number"
+        min="0"
+        value={children}
+        onChange={handleChildCountChange}
+        style={input}
+      />
 
-      <label>Evcil Hayvan</label>
-      <select value={pet} onChange={(e) => setPet(e.target.value)} style={input}>
-        <option>Yok</option>
-        <option>Var</option>
+      {childAges.length > 0 && (
+        <div style={{ marginBottom: 12 }}>
+          {childAges.map((age, index) => (
+            <input
+              key={index}
+              placeholder={`Çocuk ${index + 1} Yaşı`}
+              value={age}
+              onChange={(e) => handleChildAgeChange(index, e.target.value)}
+              style={{ ...input, marginTop: 6 }}
+            />
+          ))}
+        </div>
+      )}
+
+      <label>Kahvaltı</label>
+      <select value={breakfast} onChange={(e) => setBreakfast(e.target.value)} style={input}>
+        <option value="Evet">Evet</option>
+        <option value="Hayır">Hayır</option>
       </select>
 
       <label>Not / Açıklama</label>
@@ -79,7 +118,7 @@ Talep No: ${talepNo}
 }
 
 const container = {
-  maxWidth: 450,
+  maxWidth: 480,
   margin: '50px auto',
   padding: 20,
   background: '#fff',
