@@ -69,7 +69,13 @@ Talep No: ${talepNo}
       <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} style={input} />
 
       <label>Çıkış Tarihi</label>
-      <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} style={input} />
+      <input
+        type="date"
+        value={checkOut}
+        onChange={(e) => setCheckOut(e.target.value)}
+        min={checkIn}
+        style={input}
+      />
 
       <label>Yetişkin Sayısı</label>
       <input type="number" min="0" value={adults} onChange={(e) => setAdults(e.target.value)} style={input} />
@@ -118,8 +124,9 @@ Talep No: ${talepNo}
 }
 
 const container = {
-  maxWidth: 480,
-  margin: '50px auto',
+  maxWidth: '100%',
+  width: 480,
+  margin: '30px auto',
   padding: 20,
   background: '#fff',
   borderRadius: 10,
@@ -134,6 +141,7 @@ const input = {
   fontSize: 16,
   borderRadius: 5,
   border: '1px solid #ccc',
+  boxSizing: 'border-box',
 };
 
 const button = {
