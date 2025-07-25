@@ -29,8 +29,8 @@ function App() {
   };
 
   const handleSubmit = () => {
-    if (!checkIn || !checkOut || !adults || children === '') {
-      alert("Lütfen tüm alanları doldurunuz.");
+    if (!checkIn || !checkOut || !adults) {
+      alert("Lütfen giriş, çıkış tarihi ve yetişkin sayısını doldurunuz.");
       return;
     }
 
@@ -39,14 +39,14 @@ function App() {
     const childAgesText =
       childAges.length > 0
         ? childAges.map((age, i) => `Çocuk ${i + 1} yaşı: ${age || '-'}`).join('\n')
-        : 'Çocuk yaşı: -';
+        : '';
 
     const message = `
 ${formatDate(checkIn)}
 ${formatDate(checkOut)}
 ${adults} yetişkin
-${children} çocuk
-kahvaltı: ${breakfast.toLowerCase()}
+${children ? `${children} çocuk` : ''}
+${breakfast ? `kahvaltı: ${breakfast.toLowerCase()}` : ''}
 ${childAgesText}
 not: ${note || 'Yok'}
 
