@@ -74,7 +74,7 @@ Talep No: ${talepNo}
       <label>Yetişkin Sayısı</label>
       <input type="number" min="0" value={adults} onChange={(e) => setAdults(e.target.value)} style={input} />
 
-      <label>Çocuk Sayısı</label>
+      <label>Çocuk Sayısı <span style={{ color: '#999' }}>(0-12 yaş)</span></label>
       <input
         type="number"
         min="0"
